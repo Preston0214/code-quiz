@@ -71,7 +71,6 @@ function startTimer(){
 
        if(timeLeft <= 0){
            clearInterval(timerInterval);
-           startGame()
            timeLeft = 60
 
        }
