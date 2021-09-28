@@ -1,20 +1,3 @@
-// --I have a bunch of quiz questions to ask. What is the best way to store all those questions, PLUS the correct answer for each one?
-// --For each question in the quiz:
-   // --The question itself
-   // --The possible answers 
-   // --Which answer is correct 
-
-
-// Have a process where:
-  // --When the game starts, a countdown begins
-  // ~~A question is selected from the collection
-  // All the elements are added to the DOM 
-  // The user will click on one of the answers 
-  // Detect that click and determine if the user clicked on the right answer 
-     // If yes, add some points 
-     // If no, subtract 5 or 10 seconds from the time remaining
-     // Go the next question
-
 // After all questions OR after time runs out, show the user their score
 // High score tracking
 
@@ -26,6 +9,8 @@ var time = document.querySelector('#time');
 var currentQuestion;
 var askedQueston = document.querySelector('#question');
 var finalScore;
+var qCorrect = 0;
+var userScore = document.getElementById('userScore')
 
 var myQuestions = [
    {
@@ -145,9 +130,11 @@ function checkAnswer(userChoice){
   console.log(userChoice)
   if(userChoice === currentQuestion.correctAnswer){
     timeLeft += 10
+    qCorrect ++
+    endQuiz()
     nextQuestion()
+    console.log(qCorrect)
   }else{
-    console.log('incorrect')
     timeLeft -= 10
   }
   
@@ -158,8 +145,21 @@ function nextQuestion(){
   displayQuestion()
 }
 
+function endQuiz(){
+  if (qCorrect == 3){
+    askedQueston.remove()
+    console.log('DONE')
+    var finalScore = timeLeft;
+    console.log(finalScore)
+    localStorage.setItem('finalScore', finalScore)
+    var score = document.createElement('h3')
+    score.textContent = localStorage.getItem('finalScore', finalScore)
+    userScore.appendChild(score)
+  } 
+}
 
-//if statement to determine if answer is correct or incorrect, add or subtract time accordingly then display next question
+
+
 
 
 startBtn.addEventListener('click', startQuiz)
