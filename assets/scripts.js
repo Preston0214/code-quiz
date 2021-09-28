@@ -11,6 +11,7 @@ var askedQueston = document.querySelector('#question');
 var finalScore;
 var qCorrect = 0;
 var userScore = document.getElementById('userScore')
+var lastQuestion;
 
 var myQuestions = [
    {
@@ -49,6 +50,7 @@ function startQuiz(){
    startTimer();
    getQuestion();
    displayQuestion();
+   startBtn.remove()
 };
 
 function startTimer(){
@@ -69,6 +71,11 @@ function startTimer(){
 
 function getQuestion(){
    currentQuestion = myQuestions[Math.floor(Math.random() * myQuestions.length)]
+   if(currentQuestion == lastQuestion){
+    currentQuestion = myQuestions[Math.floor(Math.random() * myQuestions.length)]
+   }while(currentQuestion != lastQuestion)
+
+   lastQuestion = currentQuestion;
    console.log(currentQuestion)
 }
 
@@ -155,6 +162,7 @@ function endQuiz(){
     var score = document.createElement('h3')
     score.textContent = localStorage.getItem('finalScore', finalScore)
     userScore.appendChild(score)
+    time.remove()
   } 
 }
 
